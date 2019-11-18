@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_assignment_7_part_2" default="compile.module.assignment_7_part_2">
+  <dirname property="module.assignment_7_part_2.basedir" file="${ant.file.module_assignment_7_part_2}"/>
+  
+  <property name="module.jdk.home.assignment_7_part_2" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.assignment_7_part_2" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.assignment_7_part_2" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.assignment_7_part_2" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="assignment_7_part_2.output.dir" value="${module.assignment_7_part_2.basedir}/out/production/Assignment_7_part_2"/>
+  <property name="assignment_7_part_2.testoutput.dir" value="${module.assignment_7_part_2.basedir}/out/test/Assignment_7_part_2"/>
+  
+  <path id="assignment_7_part_2.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="assignment_7_part_2.module.production.classpath">
+    <path refid="${module.jdk.classpath.assignment_7_part_2}"/>
+  </path>
+  
+  <path id="assignment_7_part_2.runtime.production.module.classpath">
+    <pathelement location="${assignment_7_part_2.output.dir}"/>
+  </path>
+  
+  <path id="assignment_7_part_2.module.classpath">
+    <path refid="${module.jdk.classpath.assignment_7_part_2}"/>
+    <pathelement location="${assignment_7_part_2.output.dir}"/>
+  </path>
+  
+  <path id="assignment_7_part_2.runtime.module.classpath">
+    <pathelement location="${assignment_7_part_2.testoutput.dir}"/>
+    <pathelement location="${assignment_7_part_2.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.assignment_7_part_2">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.assignment_7_part_2">
+    <patternset refid="excluded.from.module.assignment_7_part_2"/>
+  </patternset>
+  
+  <path id="assignment_7_part_2.module.sourcepath">
+    <dirset dir="${module.assignment_7_part_2.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.assignment_7_part_2" depends="compile.module.assignment_7_part_2.production,compile.module.assignment_7_part_2.tests" description="Compile module Assignment_7_part_2"/>
+  
+  <target name="compile.module.assignment_7_part_2.production" depends="register.custom.compilers" description="Compile module Assignment_7_part_2; production classes">
+    <mkdir dir="${assignment_7_part_2.output.dir}"/>
+    <javac2 destdir="${assignment_7_part_2.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.assignment_7_part_2}/javac">
+      <compilerarg line="${compiler.args.assignment_7_part_2}"/>
+      <bootclasspath refid="assignment_7_part_2.module.bootclasspath"/>
+      <classpath refid="assignment_7_part_2.module.production.classpath"/>
+      <src refid="assignment_7_part_2.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.assignment_7_part_2"/>
+    </javac2>
+    
+    <copy todir="${assignment_7_part_2.output.dir}">
+      <fileset dir="${module.assignment_7_part_2.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.assignment_7_part_2.tests" depends="register.custom.compilers,compile.module.assignment_7_part_2.production" description="compile module Assignment_7_part_2; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.assignment_7_part_2" description="cleanup module">
+    <delete dir="${assignment_7_part_2.output.dir}"/>
+    <delete dir="${assignment_7_part_2.testoutput.dir}"/>
+  </target>
+</project>
